@@ -75,6 +75,22 @@ public class IsoTransform : MonoBehaviour
     }
   }
 
+  public Vector3 IsoWorldMin
+  {
+    get
+    {
+      return IsoMin + IsoPosition;
+    }
+  }
+
+  public Vector3 IsoWorldMax
+  {
+    get
+    {
+      return IsoMax + IsoPosition;
+    }
+  }
+
   // Start is called before the first frame update
   void Start()
   {
@@ -97,7 +113,9 @@ public class IsoTransform : MonoBehaviour
     var world = GetWorld();
     if (world)
     {
-      transform.position = world.matrix.MultiplyPoint3x4(isoPosition);
+      var newPos = world.matrix.MultiplyPoint3x4(isoPosition);
+      newPos.z = transform.position.z; // keep the z
+      transform.position = newPos;
     }
   }
 }

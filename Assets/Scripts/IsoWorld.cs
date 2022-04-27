@@ -3,6 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 
+// https://mazebert.com/forum/news/isometric-depth-sorting--id775/
+// https://shaunlebron.github.io/IsometricBlocks/
+// https://en.wikipedia.org/wiki/Topological_sorting
+// http://bannalia.blogspot.com/2008/02/filmation-math.html
+// https://github.com/as3isolib/as3isolib.v1
+// http://rotates.org/phaser/iso/
+// https://forum.unity.com/threads/isometric-tilemap-sorting-issues.554914/
+// http://andrewrussell.net/2016/06/how-2-5d-sorting-works-in-river-city-ransom-underground/
+// https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm
+
 [DisallowMultipleComponent]
 [RequireComponent(typeof(Grid))]
 public class IsoWorld : MonoBehaviour
@@ -36,9 +46,9 @@ public class IsoWorld : MonoBehaviour
     }
   }
 
-  public Vector3 xAxis => new Vector3(baseSize / 2, Ratio * baseSize / 2, 0);
-  public Vector3 yAxis => new Vector3(-baseSize / 2, Ratio * baseSize / 2, 0);
-  public Vector3 zAxis => new Vector3(0, Ratio * baseSize * getZScale(), 0);
+  public Vector2 xAxis => new Vector2(baseSize / 2, Ratio * baseSize / 2);
+  public Vector2 yAxis => new Vector2(-baseSize / 2, Ratio * baseSize / 2);
+  public Vector2 zAxis => new Vector2(0, Ratio * baseSize * getZScale());
 
   public Matrix4x4 matrix => new Matrix4x4(xAxis, yAxis, zAxis, Vector4.zero);
 
