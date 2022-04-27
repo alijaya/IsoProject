@@ -236,7 +236,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1669197540}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1522648418
 SpriteRenderer:
@@ -314,6 +314,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1669197540}
   - component: {fileID: 1669197539}
+  - component: {fileID: 1669197541}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -344,11 +345,28 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1522648417}
   - {fileID: 1803640648}
+  - {fileID: 1522648417}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1669197541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669197538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c4e03492260ffd4c8bc1235ac1af2ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseSize: 1
+  ratioType: 1
+  customRatio: 0.67
+  zType: 1
+  zScale: 1
 --- !u!1 &1803640647
 GameObject:
   m_ObjectHideFlags: 0
@@ -379,7 +397,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1669197540}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1803640649
 MonoBehaviour:

@@ -87,26 +87,17 @@ public class IsoTransform : MonoBehaviour
 
   }
 
-  public Grid GetGrid()
+  public IsoWorld GetWorld()
   {
-    return GetComponentInParent<Grid>();
+    return GetComponentInParent<IsoWorld>();
   }
 
   public void UpdatePosition()
   {
-    var grid = GetGrid();
-    if (grid)
+    var world = GetWorld();
+    if (world)
     {
-      var xAxis = grid.CellToLocal(Vector3Int.right);
-      var yAxis = grid.CellToLocal(Vector3Int.up);
-      var zAxis = grid.CellToLocal(Vector3Int.forward);
-      zAxis.z = 0;
-      transform.position = xAxis * isoPosition.x + yAxis * isoPosition.y + zAxis * isoPosition.z;
+      transform.position = world.matrix.MultiplyPoint3x4(isoPosition);
     }
   }
-
-  //private void OnValidate()
-  //{
-  //    UpdatePosition();
-  //}
 }

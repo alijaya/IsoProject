@@ -8,7 +8,7 @@ using NaughtyAttributes.Editor;
 public class IsoTransformEditor : NaughtyInspector
 {
   private IsoTransform isoTransform;
-  private Grid grid;
+  private IsoWorld world;
   private Transform transform;
   private Vector3 pos;
   private Vector3 xAxis;
@@ -34,16 +34,13 @@ public class IsoTransformEditor : NaughtyInspector
   public void OnSceneGUI()
   {
     isoTransform = target as IsoTransform;
-    grid = isoTransform.GetGrid();
+    world = isoTransform.GetWorld();
     transform = isoTransform.transform;
     pos = transform.position;
-    xAxis = grid.CellToLocal(Vector3Int.right);
-    yAxis = grid.CellToLocal(Vector3Int.up);
-    zAxis = grid.CellToLocal(Vector3Int.forward);
-    zAxis.z = 0;
-
-    matrix = new Matrix4x4(xAxis, yAxis, zAxis, Vector4.zero);
-
+    xAxis = world.xAxis;
+    yAxis = world.yAxis;
+    zAxis = world.zAxis;
+    matrix = world.matrix;
 
     anchor = pos + matrix.MultiplyPoint3x4(isoTransform.IsoAnchor);
     var size = isoTransform.IsoSize;
