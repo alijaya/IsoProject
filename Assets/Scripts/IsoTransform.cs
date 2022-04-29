@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using NaughtyAttributes;
+using System.Linq;
 
 [DisallowMultipleComponent]
 public class IsoTransform : MonoBehaviour
@@ -116,6 +118,17 @@ public class IsoTransform : MonoBehaviour
       var newPos = world.matrix.MultiplyPoint3x4(isoPosition);
       newPos.z = transform.position.z; // keep the z
       transform.position = newPos;
+      if (world.AutoSort) world.Sort();
     }
   }
+
+  // Internal Usage
+  [NonSerialized]
+  public List<IsoTransform> behind = new List<IsoTransform>();
+
+  [ShowNativeProperty]
+  private string behindDebug => String.Join(", ", behind.Select(iso => iso.name));
+
+  [NonSerialized]
+  public bool visited = false;
 }

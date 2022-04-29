@@ -48,7 +48,7 @@ public class IsoWorld : MonoBehaviour
 
   public Vector2 xAxis => new Vector2(baseSize / 2, Ratio * baseSize / 2);
   public Vector2 yAxis => new Vector2(-baseSize / 2, Ratio * baseSize / 2);
-  public Vector2 zAxis => new Vector2(0, Ratio * baseSize * getZScale());
+  public Vector2 zAxis => new Vector2(0, Ratio * baseSize * GetZScale());
 
   public Matrix4x4 matrix => new Matrix4x4(xAxis, yAxis, zAxis, Vector4.zero);
 
@@ -75,7 +75,9 @@ public class IsoWorld : MonoBehaviour
   [OnValueChanged("UpdateRatio")]
   private float zScale = 1;
 
-  private float getZScale()
+  public bool AutoSort = true;
+
+  public float GetZScale()
   {
     switch (zType)
     {
@@ -89,10 +91,71 @@ public class IsoWorld : MonoBehaviour
   {
     var grid = GetComponent<Grid>();
     grid.cellLayout = GridLayout.CellLayout.IsometricZAsY;
-    grid.cellSize = new Vector3(baseSize, baseSize * Ratio, 2 * getZScale());
+    grid.cellSize = new Vector3(baseSize, baseSize * Ratio, 2 * GetZScale());
+
+    var tempAutoSort = AutoSort;
+    AutoSort = false; // force disable sort
     foreach (var isoTransform in GetComponentsInChildren<IsoTransform>())
     {
       isoTransform.UpdatePosition();
+    }
+    AutoSort = tempAutoSort;
+    Sort();
+  }
+
+  [HideIf("AutoSort")]
+  [Button]
+  public void Sort()
+  {
+    var isoTransforms = GetComponentsInChildren<IsoTransform>();
+
+    // reset
+    foreach (var iso in isoTransforms)
+    {
+      iso.behind.Clear();
+      iso.visited = false;
+    }
+
+    // create relation, naive solution, O(N^2)
+    for (var i = 0; i < isoTransforms.Length; i++)
+    {
+      var isoA = isoTransforms[i];
+      for (var j = i + 1; j < isoTransforms.Length; j++)
+      {
+        var isoB = isoTransforms[j];
+        if (isoA.IsInFront(isoB))
+        {
+          isoA.behind.Add(isoB);
+        }
+        else
+        {
+          isoB.behind.Add(isoA);
+        }
+      }
+    }
+
+    // toposort, O(N)
+
+    var depth = 0;
+    foreach (var iso in isoTransforms)
+    {
+      if (iso.visited) continue;
+      visit(iso);
+    }
+
+    void visit(IsoTransform iso)
+    {
+      if (iso.visited) return;
+      iso.visited = true;
+      foreach (var behind in iso.behind)
+      {
+        visit(behind);
+      }
+
+      // set depth
+      var newPos = iso.transform.position;
+      newPos.z = (depth++) * (-1);
+      iso.transform.position = newPos;
     }
   }
 

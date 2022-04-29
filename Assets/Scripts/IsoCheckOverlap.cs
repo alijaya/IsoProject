@@ -22,7 +22,14 @@ public class IsoCheckOverlap : MonoBehaviour
     {
       if (iso.IsOverlap(compare))
       {
-        sprite.color = Color.green;
+        if (iso.IsBehind(compare))
+        {
+          sprite.color = Color.red;
+        }
+        else
+        {
+          sprite.color = Color.green;
+        }
       }
       else
       {
