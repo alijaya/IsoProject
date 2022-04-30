@@ -12,10 +12,10 @@ public static class IsoUtility
   {
     var world = isoA.GetWorld();
     var scale = world.GetZScale();
-    var minA = isoA.IsoWorldMin;
-    var maxA = isoA.IsoWorldMax;
-    var minB = isoB.IsoWorldMin;
-    var maxB = isoB.IsoWorldMax;
+    var minA = isoA.IsoMin;
+    var maxA = isoA.IsoMax;
+    var minB = isoB.IsoMin;
+    var maxB = isoB.IsoMax;
     minA.z *= scale;
     maxA.z *= scale;
     minB.z *= scale;
@@ -31,12 +31,12 @@ public static class IsoUtility
 
   public static bool IsBehind(this IsoTransform isoA, IsoTransform isoB)
   {
-    var xBehind = isoB.IsoWorldMax.x - isoA.IsoWorldMin.x;
-    var yBehind = isoB.IsoWorldMax.y - isoA.IsoWorldMin.y;
-    var zBehind = isoA.IsoWorldMax.z - isoB.IsoWorldMin.z;
-    var xFront = isoA.IsoWorldMax.x - isoB.IsoWorldMin.x;
-    var yFront = isoA.IsoWorldMax.y - isoB.IsoWorldMin.y;
-    var zFront = isoB.IsoWorldMax.z - isoA.IsoWorldMin.z;
+    var xBehind = isoB.IsoMax.x - isoA.IsoMin.x;
+    var yBehind = isoB.IsoMax.y - isoA.IsoMin.y;
+    var zBehind = isoA.IsoMax.z - isoB.IsoMin.z;
+    var xFront = isoA.IsoMax.x - isoB.IsoMin.x;
+    var yFront = isoA.IsoMax.y - isoB.IsoMin.y;
+    var zFront = isoB.IsoMax.z - isoA.IsoMin.z;
     var minBehind = Mathf.Min(xBehind, yBehind, zBehind);
     var minFront = Mathf.Min(xFront, yFront, zFront);
     return minBehind < minFront;

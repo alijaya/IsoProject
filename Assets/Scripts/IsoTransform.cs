@@ -6,20 +6,28 @@ using NaughtyAttributes;
 using System.Linq;
 
 [DisallowMultipleComponent]
-public class IsoTransform : MonoBehaviour
+public class IsoTransform : MonoBehaviour, IIsoTransform
 {
-  [SerializeField]
-  [OnValueChanged("UpdatePosition")]
-  private Vector3 isoPosition;
   public Vector3 IsoPosition
   {
     get
     {
-      return isoPosition;
+      return IsoLocalPosition;
+    }
+  }
+
+  [SerializeField]
+  [OnValueChanged("UpdatePosition")]
+  private Vector3 isoLocalPosition;
+  public Vector3 IsoLocalPosition
+  {
+    get
+    {
+      return isoLocalPosition;
     }
     set
     {
-      isoPosition = value;
+      isoLocalPosition = value;
       UpdatePosition();
     }
   }
@@ -52,7 +60,7 @@ public class IsoTransform : MonoBehaviour
     }
   }
 
-  public Vector3 IsoMin
+  public Vector3 IsoLocalMin
   {
     get
     {
@@ -65,7 +73,7 @@ public class IsoTransform : MonoBehaviour
     }
   }
 
-  public Vector3 IsoMax
+  public Vector3 IsoLocalMax
   {
     get
     {
@@ -77,19 +85,19 @@ public class IsoTransform : MonoBehaviour
     }
   }
 
-  public Vector3 IsoWorldMin
+  public Vector3 IsoMin
   {
     get
     {
-      return IsoMin + IsoPosition;
+      return IsoLocalMin + IsoPosition;
     }
   }
 
-  public Vector3 IsoWorldMax
+  public Vector3 IsoMax
   {
     get
     {
-      return IsoMax + IsoPosition;
+      return IsoLocalMax + IsoPosition;
     }
   }
 
@@ -115,7 +123,7 @@ public class IsoTransform : MonoBehaviour
     var world = GetWorld();
     if (world)
     {
-      var newPos = world.matrix.MultiplyPoint3x4(isoPosition);
+      var newPos = world.matrix.MultiplyPoint3x4(isoLocalPosition);
       newPos.z = transform.position.z; // keep the z
       transform.position = newPos;
       if (world.AutoSort) world.Sort();

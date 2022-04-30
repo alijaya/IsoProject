@@ -65,7 +65,7 @@ public class IsoTransformEditor : NaughtyInspector
     if (EditorGUI.EndChangeCheck())
     {
       Undo.RecordObjects(recordObjects, "Change Iso X");
-      isoTransform.IsoPosition += Vector3.right * Vector3.Dot(newPosX - pos, xAxis);
+      isoTransform.IsoLocalPosition += Vector3.right * Vector3.Dot(newPosX - pos, xAxis);
     }
 
     Handles.color = Handles.yAxisColor;
@@ -74,7 +74,7 @@ public class IsoTransformEditor : NaughtyInspector
     if (EditorGUI.EndChangeCheck())
     {
       Undo.RecordObjects(recordObjects, "Change Iso Y");
-      isoTransform.IsoPosition += Vector3.up * Vector3.Dot(newPosY - pos, yAxis);
+      isoTransform.IsoLocalPosition += Vector3.up * Vector3.Dot(newPosY - pos, yAxis);
     }
 
     Handles.color = Handles.zAxisColor;
@@ -83,7 +83,7 @@ public class IsoTransformEditor : NaughtyInspector
     if (EditorGUI.EndChangeCheck())
     {
       Undo.RecordObjects(recordObjects, "Change Iso Z");
-      isoTransform.IsoPosition += Vector3.forward * Vector3.Dot(newPosZ - pos, zAxis);
+      isoTransform.IsoLocalPosition += Vector3.forward * Vector3.Dot(newPosZ - pos, zAxis);
     }
   }
 
@@ -124,7 +124,7 @@ public class IsoTransformEditor : NaughtyInspector
     if (EditorGUI.EndChangeCheck())
     {
       Undo.RecordObject(isoTransform, "Change Iso Min X");
-      isoTransform.IsoMin += Vector3.right * Vector3.Dot(newPos - pos, xAxis);
+      isoTransform.IsoLocalMin += Vector3.right * Vector3.Dot(newPos - pos, xAxis);
     }
 
     Handles.color = Handles.xAxisColor;
@@ -135,7 +135,7 @@ public class IsoTransformEditor : NaughtyInspector
     if (EditorGUI.EndChangeCheck())
     {
       Undo.RecordObject(isoTransform, "Change Iso Max X");
-      isoTransform.IsoMax += Vector3.right * Vector3.Dot(newPos - pos, xAxis);
+      isoTransform.IsoLocalMax += Vector3.right * Vector3.Dot(newPos - pos, xAxis);
     }
 
     Handles.color = Handles.yAxisColor;
@@ -146,7 +146,7 @@ public class IsoTransformEditor : NaughtyInspector
     if (EditorGUI.EndChangeCheck())
     {
       Undo.RecordObject(isoTransform, "Change Iso Min Y");
-      isoTransform.IsoMin += Vector3.up * Vector3.Dot(newPos - pos, yAxis);
+      isoTransform.IsoLocalMin += Vector3.up * Vector3.Dot(newPos - pos, yAxis);
     }
 
     Handles.color = Handles.yAxisColor;
@@ -157,7 +157,7 @@ public class IsoTransformEditor : NaughtyInspector
     if (EditorGUI.EndChangeCheck())
     {
       Undo.RecordObject(isoTransform, "Change Iso Max Y");
-      isoTransform.IsoMax += Vector3.up * Vector3.Dot(newPos - pos, yAxis);
+      isoTransform.IsoLocalMax += Vector3.up * Vector3.Dot(newPos - pos, yAxis);
     }
 
     Handles.color = Handles.zAxisColor;
@@ -168,7 +168,7 @@ public class IsoTransformEditor : NaughtyInspector
     if (EditorGUI.EndChangeCheck())
     {
       Undo.RecordObject(isoTransform, "Change Iso Min Z");
-      isoTransform.IsoMin += Vector3.forward * Vector3.Dot(newPos - pos, zAxis);
+      isoTransform.IsoLocalMin += Vector3.forward * Vector3.Dot(newPos - pos, zAxis);
     }
 
     Handles.color = Handles.zAxisColor;
@@ -179,7 +179,7 @@ public class IsoTransformEditor : NaughtyInspector
     if (EditorGUI.EndChangeCheck())
     {
       Undo.RecordObject(isoTransform, "Change Iso Max Z");
-      isoTransform.IsoMax += Vector3.forward * Vector3.Dot(newPos - pos, zAxis);
+      isoTransform.IsoLocalMax += Vector3.forward * Vector3.Dot(newPos - pos, zAxis);
     }
 
   }
